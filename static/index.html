@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AD Hype Chatbot - DB AI Assistant</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Noto+Sans+Bengali:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="glass-bg-glow"></div>
+    <div class="app-container">
+        
+        <!-- Header -->
+        <header class="app-header">
+            <div class="brand">
+                <div class="brand-icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z" fill="currentColor"/>
+                    </svg>
+                </div>
+                <div>
+                    <h1>AD Hype Chatbot</h1>
+                    <p>OpenAI PostgreSQL Data Assistant</p>
+                </div>
+            </div>
+            
+            <div class="status-indicators">
+                <div id="db-status-badge" class="status-badge status-loading">
+                    <span class="indicator-dot"></span>
+                    <span>PostgreSQL: Checking...</span>
+                </div>
+                <div id="openai-status-badge" class="status-badge status-loading">
+                    <span class="indicator-dot"></span>
+                    <span>OpenAI: Checking...</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Body -->
+        <main class="main-content">
+            
+            <!-- Chat Column -->
+            <section class="chat-column">
+                <div class="glass-card chat-card">
+                    <div class="chat-header">
+                        <h2>Chat Conversation</h2>
+                        <button id="clear-chat-btn" class="btn btn-secondary btn-sm">Clear History</button>
+                    </div>
+                    
+                    <div id="chat-messages" class="chat-messages-container">
+                        <!-- Welcome message will be added here dynamically -->
+                    </div>
+
+                    <!-- Suggestion Chips -->
+                    <div class="suggestions-wrapper">
+                        <p class="suggestions-title">Quick Queries / দ্রুত প্রশ্নসমূহ:</p>
+                        <div id="suggestion-chips" class="suggestion-chips">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Chat Input -->
+                    <div class="chat-input-wrapper">
+                        <form id="chat-form" class="chat-form">
+                            <input 
+                                type="text" 
+                                id="user-input" 
+                                placeholder="Type your query about campaigns, companies, or hype... (যেমন: কোন কোম্পানির হাইপ বেশি?)" 
+                                autocomplete="off"
+                                required
+                            >
+                            <button type="submit" id="send-btn" class="btn btn-primary">
+                                <span>Send</span>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                                </svg>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Dashboard / Inspector Column -->
+            <section class="dashboard-column">
+                <!-- Database Schema View -->
+                <div class="glass-card schema-card">
+                    <div class="card-header">
+                        <h3>Database Schema</h3>
+                        <span class="schema-tag">public schema</span>
+                    </div>
+                    <div class="card-body">
+                        <p class="section-desc">Tables found in your database. These tables are used by the AI model to write queries.</p>
+                        <div id="schema-tree" class="schema-tree">
+                            <div class="loading-spinner">Loading tables...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SQL & Result Inspector -->
+                <div class="glass-card inspector-card">
+                    <div class="card-header">
+                        <h3>SQL & Results Inspector</h3>
+                        <span class="inspector-tag">last executed query</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="inspector-section">
+                            <label>Generated PostgreSQL Query</label>
+                            <div class="sql-code-block">
+                                <pre><code id="inspector-sql">-- Submit a query in the chat to see generated SQL</code></pre>
+                                <button id="copy-sql-btn" class="copy-btn" title="Copy SQL">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="inspector-section">
+                            <label>SQL Query Return Data</label>
+                            <div id="inspector-data-container" class="data-table-container">
+                                <p class="placeholder-text">Execute a prompt to view data records.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+        
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p>&copy; 2026 AD Hype Chatbot Pipeline. Secured credentials inside <code>.env</code>.</p>
+        </footer>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
